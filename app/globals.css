@@ -2507,3 +2507,274 @@ a {
     padding: 20px !important;
   }
 }
+
+/* =========================================
+   SHOP EASE AUTH PAGES
+   ========================================= */
+
+.auth-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #f5f7fb;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* LEFT SIDE */
+
+.auth-left {
+  background: linear-gradient(135deg, #172554, #1d4ed8);
+  color: white;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+
+.auth-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.brand-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: white;
+  color: #1d4ed8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.auth-intro {
+  max-width: 520px;
+  margin-bottom: 120px;
+}
+
+.auth-intro h1 {
+  font-size: 52px;
+  line-height: 1.1;
+  margin: 0 0 20px;
+  color: white;
+}
+
+.auth-intro > p {
+  font-size: 19px;
+  line-height: 1.7;
+  color: #dbeafe;
+  margin-bottom: 40px;
+}
+
+.auth-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.benefit {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.benefit span {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.benefit p {
+  margin: 0;
+  font-size: 16px;
+  color: #eff6ff;
+}
+
+
+/* RIGHT SIDE */
+
+.auth-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 460px;
+  background: white;
+  border-radius: 18px;
+  padding: 42px;
+  box-shadow: 0 15px 45px rgba(15, 23, 42, 0.10);
+  border: 1px solid #e5e7eb;
+}
+
+.mobile-brand {
+  display: none;
+}
+
+.auth-heading {
+  margin-bottom: 30px;
+}
+
+.auth-heading h2 {
+  margin: 0 0 8px;
+  font-size: 30px;
+  color: #111827;
+}
+
+.auth-heading p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 15px;
+}
+
+
+/* FORM */
+
+.register-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.form-group input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 9px;
+  background: #fff;
+  color: #111827;
+  font-size: 15px;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.form-group input::placeholder {
+  color: #9ca3af;
+}
+
+.form-group input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+
+/* BUTTON */
+
+.auth-submit {
+  width: 100%;
+  border: none;
+  border-radius: 9px;
+  padding: 14px;
+  margin-top: 5px;
+  background: #2563eb;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.auth-submit:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+
+/* LOGIN LINK */
+
+.auth-divider {
+  text-align: center;
+  margin: 28px 0 16px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.login-link {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+  padding: 13px;
+  border: 1px solid #2563eb;
+  border-radius: 9px;
+  color: #2563eb;
+  font-size: 15px;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.login-link:hover {
+  background: #eff6ff;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 800px) {
+
+  .auth-page {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-left {
+    display: none;
+  }
+
+  .auth-right {
+    min-height: 100vh;
+    padding: 25px;
+  }
+
+  .register-card {
+    max-width: 480px;
+    padding: 30px 25px;
+  }
+
+  .mobile-brand {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    color: #172554;
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .mobile-brand .brand-icon {
+    background: #2563eb;
+    color: white;
+  }
+
+  .auth-heading h2 {
+    font-size: 26px;
+  }
+}
