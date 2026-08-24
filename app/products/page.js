@@ -32,6 +32,39 @@ export default function ProductsPage() {
     }
   };
 
+
+  // Get a unique wishlist key for the logged-in user
+const getWishlistKey = () => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    return null;
+  }
+
+  try {
+    const payload = JSON.parse(
+      atob(token.split(".")[1])
+    );
+
+    const userId =
+      payload.id ||
+      payload._id ||
+      payload.userId ||
+      payload.sub ||
+      payload.email;
+
+    if (!userId) {
+      return null;
+    }
+
+    return `wishlist_${userId}`;
+  } catch (error) {
+    console.error("Error reading user token:", error);
+    return null;
+  }
+};
+
+
   // Load products and cart when page opens
  useEffect(() => {
   fetchProducts();
@@ -41,52 +74,54 @@ export default function ProductsPage() {
 
   setCart(savedCart);
 
-  const savedWishlist =
-    JSON.parse(localStorage.getItem("wishlist")) || [];
+  const wishlistKey = getWishlistKey();
 
-  setWishlist(savedWishlist);
+  if (wishlistKey) {
+    const savedWishlist =
+      JSON.parse(localStorage.getItem(wishlistKey)) || [];
+
+    setWishlist(savedWishlist);
+  } else {
+    setWishlist([]);
+  }
 }, []);
 
 
   // Add product to cart
-  const addToCart = (product) => {
-    const existingProduct = cart.find(
-      (item) => item._id === product._id
+ const addToWishlist = (product) => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    alert("Please login to add products to wishlist");
+    return;
+  }
+
+  let userId;
+
+  try {
+    const payload = JSON.parse(
+      atob(token.split(".")[1])
     );
 
-    let updatedCart;
+    userId =
+      payload.id ||
+      payload._id ||
+      payload.userId ||
+      payload.sub ||
+      payload.email;
+  } catch (error) {
+    console.error("Error reading user information:", error);
+    alert("Please login again");
+    return;
+  }
 
-    if (existingProduct) {
-      updatedCart = cart.map((item) =>
-        item._id === product._id
-          ? {
-              ...item,
-              quantity: item.quantity + 1,
-            }
-          : item
-      );
-    } else {
-      updatedCart = [
-        ...cart,
-        {
-          ...product,
-          quantity: 1,
-        },
-      ];
-    }
+  if (!userId) {
+    alert("Please login again");
+    return;
+  }
 
-    setCart(updatedCart);
+  const wishlistKey = `wishlist_${userId}`;
 
-    localStorage.setItem(
-      "cart",
-      JSON.stringify(updatedCart)
-    );
-
-    alert(`${product.name} added to cart`);
-  };
-
-  // Add product to wishlist
-const addToWishlist = (product) => {
   const alreadyInWishlist = wishlist.some(
     (item) => item._id === product._id
   );
@@ -104,12 +139,14 @@ const addToWishlist = (product) => {
   setWishlist(updatedWishlist);
 
   localStorage.setItem(
-    "wishlist",
+    wishlistKey,
     JSON.stringify(updatedWishlist)
   );
 
   alert(`${product.name} added to wishlist`);
 };
+
+ 
 
 
   // Increase quantity
