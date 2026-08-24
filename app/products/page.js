@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Navbar from "@/app/components/navbar";
+import { getCartKey } from "@/app/components/cartStorage";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
@@ -9,7 +11,7 @@ export default function ProductsPage() {
   const [showAddForm, setShowAddForm] = useState(false);
   const [cart, setCart] = useState([]);
   const [wishlist, setWishlist] = useState([]);
-
+  const [userRole, setUserRole] = useState("user");
   const [newProduct, setNewProduct] = useState({
     name: "",
     price: "",
@@ -66,13 +68,30 @@ const getWishlistKey = () => {
 
 
   // Load products and cart when page opens
- useEffect(() => {
+useEffect(() => {
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    try {
+      const payload = JSON.parse(
+        atob(token.split(".")[1])
+      );
+
+      setUserRole(payload.role || "user");
+    } catch (error) {
+      console.error("Error reading user role:", error);
+      setUserRole("user");
+    }
+  } else {
+    setUserRole("user");
+  }
+
   fetchProducts();
 
-  const savedCart =
-    JSON.parse(localStorage.getItem("cart")) || [];
+ const savedCart =
+  JSON.parse(localStorage.getItem(getCartKey())) || [];
 
-  setCart(savedCart);
+setCart(savedCart);
 
   const wishlistKey = getWishlistKey();
 
@@ -87,8 +106,46 @@ const getWishlistKey = () => {
 }, []);
 
 
-  // Add product to cart
- const addToWishlist = (product) => {
+// Add product to cart
+const addToCart = (product) => {
+  const existingProduct = cart.find(
+    (item) => item._id === product._id
+  );
+
+  let updatedCart;
+
+  if (existingProduct) {
+    updatedCart = cart.map((item) =>
+      item._id === product._id
+        ? {
+            ...item,
+            quantity: item.quantity + 1,
+          }
+        : item
+    );
+  } else {
+    updatedCart = [
+      ...cart,
+      {
+        ...product,
+        quantity: 1,
+      },
+    ];
+  }
+
+  setCart(updatedCart);
+
+  localStorage.setItem(
+    getCartKey(),
+    JSON.stringify(updatedCart)
+  );
+
+  alert(`${product.name} added to cart`);
+};
+
+
+ // Add product to wishlist
+const addToWishlist = (product) => {
   const token = localStorage.getItem("token");
 
   if (!token) {
@@ -163,7 +220,7 @@ const getWishlistKey = () => {
     setCart(updatedCart);
 
     localStorage.setItem(
-      "cart",
+      getCartKey(),
       JSON.stringify(updatedCart)
     );
   };
@@ -183,10 +240,10 @@ const getWishlistKey = () => {
 
     setCart(updatedCart);
 
-    localStorage.setItem(
-      "cart",
-      JSON.stringify(updatedCart)
-    );
+   localStorage.setItem(
+  getCartKey(),
+  JSON.stringify(updatedCart)
+);
   };
 
   // Remove product from cart
@@ -198,9 +255,9 @@ const getWishlistKey = () => {
     setCart(updatedCart);
 
     localStorage.setItem(
-      "cart",
-      JSON.stringify(updatedCart)
-    );
+  getCartKey(),
+  JSON.stringify(updatedCart)
+);
   };
 
   // Add product
@@ -285,16 +342,19 @@ const getWishlistKey = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch(
-        `/api/products/${editingProduct._id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(editingProduct),
-        }
-      );
+      const token = localStorage.getItem("token");
+
+const response = await fetch(
+  `/api/products/${editingProduct._id}`,
+  {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(editingProduct),
+  }
+);
 
       const data = await response.json();
 
@@ -313,9 +373,11 @@ const getWishlistKey = () => {
   };
 
   return (
-    <main className="products-page">
+  <main className="products-page">
 
-      <h1>All Products</h1>
+    <Navbar />
+
+    <h1>All Products</h1>
 
       <p>
         Cart Items: {cart.length}
@@ -472,21 +534,25 @@ const getWishlistKey = () => {
 </button>
 
 
-            <button
-              onClick={() =>
-                editProduct(product)
-              }
-            >
-              Edit
-            </button>
+            {userRole === "admin" && (
+  <button
+    onClick={() =>
+      editProduct(product)
+    }
+  >
+    Edit
+  </button>
+)}
 
-            <button
-              onClick={() =>
-                deleteProduct(product._id)
-              }
-            >
-              Delete
-            </button>
+            {userRole === "admin" && (
+  <button
+    onClick={() =>
+      deleteProduct(product._id)
+    }
+  >
+    Delete
+  </button>
+)}
 
           </div>
         ))}

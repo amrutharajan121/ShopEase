@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Navbar from "@/app/components/navbar";
+import { getCartKey } from "@/app/components/cartStorage";
 
 export default function CheckoutPage() {
   const [cart, setCart] = useState([]);
@@ -15,9 +17,8 @@ export default function CheckoutPage() {
   });
 
   useEffect(() => {
-    const savedCart =
-      JSON.parse(localStorage.getItem("cart")) || [];
-
+   const savedCart =
+  JSON.parse(localStorage.getItem(getCartKey())) || [];
     setCart(savedCart);
   }, []);
 
@@ -72,7 +73,7 @@ export default function CheckoutPage() {
       if (response.ok) {
         alert("Order placed successfully!");
 
-        localStorage.removeItem("cart");
+        localStorage.removeItem(getCartKey());
 
         window.location.href = "/";
       } else {
@@ -359,6 +360,7 @@ export default function CheckoutPage() {
       `}</style>
 
       <main className="checkout-page">
+        <Navbar />
 
         <h1>Checkout</h1>
 

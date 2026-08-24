@@ -27,10 +27,10 @@ export default function LoginPage() {
         localStorage.setItem("token", data.token);
 
         if (data.user?.role === "admin") {
-          window.location.href = "/admin";
-        } else {
-          window.location.href = "/";
-        }
+  window.location.href = "/admin";
+} else {
+  window.location.href = "/products";
+}
       } else {
         alert(data.message || "Login failed");
       }

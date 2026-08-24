@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Navbar from "@/app/components/navbar";
+import { getCartKey } from "@/app/components/cartStorage";
 
 export default function CartPage() {
   const [cart, setCart] = useState([]);
@@ -8,7 +10,7 @@ export default function CartPage() {
   // Load cart from localStorage
   useEffect(() => {
     const savedCart =
-      JSON.parse(localStorage.getItem("cart")) || [];
+  JSON.parse(localStorage.getItem(getCartKey())) || [];
 
     setCart(savedCart);
   }, []);
@@ -27,9 +29,9 @@ export default function CartPage() {
     setCart(updatedCart);
 
     localStorage.setItem(
-      "cart",
-      JSON.stringify(updatedCart)
-    );
+  getCartKey(),
+  JSON.stringify(updatedCart)
+);
   };
 
   // Decrease quantity
@@ -48,9 +50,9 @@ export default function CartPage() {
     setCart(updatedCart);
 
     localStorage.setItem(
-      "cart",
-      JSON.stringify(updatedCart)
-    );
+  getCartKey(),
+  JSON.stringify(updatedCart)
+);
   };
 
   // Remove product
@@ -61,10 +63,10 @@ export default function CartPage() {
 
     setCart(updatedCart);
 
-    localStorage.setItem(
-      "cart",
-      JSON.stringify(updatedCart)
-    );
+   localStorage.setItem(
+  getCartKey(),
+  JSON.stringify(updatedCart)
+);
   };
 
   // Calculate total
@@ -75,9 +77,11 @@ export default function CartPage() {
   );
 
   return (
-    <main className="cart-page">
+  <main className="cart-page">
 
-      <h1>Shopping Cart</h1>
+    <Navbar />
+
+    <h1>Shopping Cart</h1>
 
       {cart.length === 0 ? (
         <div className="empty-cart">

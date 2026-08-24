@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Navbar from "@/app/components/navbar";
 
 export default function OrdersPage() {
   const [orders, setOrders] = useState([]);
@@ -53,6 +54,7 @@ export default function OrdersPage() {
   if (loading) {
     return (
       <main className="orders-page">
+        <Navbar />
         <h1>My Orders</h1>
         <p>Loading orders...</p>
       </main>

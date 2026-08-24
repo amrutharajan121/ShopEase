@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Navbar from "@/app/components/navbar";
 
 export default function WishlistPage() {
   const [wishlist, setWishlist] = useState([]);
@@ -75,9 +76,11 @@ export default function WishlistPage() {
   };
 
   return (
-    <main className="wishlist-page">
+  <main className="wishlist-page">
 
-      <h1>My Wishlist ❤️</h1>
+    <Navbar />
+
+    <h1>My Wishlist ❤️</h1>
 
       {wishlist.length === 0 ? (
         <div className="empty-wishlist">
