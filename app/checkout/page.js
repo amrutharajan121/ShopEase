@@ -75,7 +75,7 @@ export default function CheckoutPage() {
 
         localStorage.removeItem(getCartKey());
 
-        window.location.href = "/";
+       window.location.href = "/orders";
       } else {
         alert(data.message || "Failed to place order");
       }

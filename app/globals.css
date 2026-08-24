@@ -34,6 +34,24 @@ a {
   z-index: 100;
 }
 
+.nav-back-btn {
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #374151;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-back-btn:hover {
+  background: #f5f7fa;
+  border-color: #2874f0;
+  color: #2874f0;
+}
+
 .logo {
   display: flex;
   align-items: center;
@@ -3208,4 +3226,48 @@ a {
   .product-actions button {
     max-width: 100%;
   }
+}
+
+.orders-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 20px;
+  padding: 9px 16px;
+  border: 1px solid #d8dde5;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #374151;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.orders-back-btn:hover {
+  background: #f5f7fa;
+  color: #2874f0;
+  border-color: #2874f0;
+}
+
+.orders-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 20px;
+  padding: 9px 16px;
+  border: 1px solid #d8dde5;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #374151;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.orders-back-btn:hover {
+  background: #f5f7fa;
+  color: #2874f0;
+  border-color: #2874f0;
 }

@@ -51,116 +51,127 @@ export default function OrdersPage() {
     }
   };
 
+  // Loading
   if (loading) {
     return (
-      <main className="orders-page">
+      <>
         <Navbar />
-        <h1>My Orders</h1>
-        <p>Loading orders...</p>
-      </main>
+
+        <main className="orders-page">
+          <h1>My Orders</h1>
+          <p>Loading orders...</p>
+        </main>
+      </>
     );
   }
 
+  // Orders page
   return (
-    <main className="orders-page">
+    <>
+      <Navbar />
 
-      <h1>My Orders</h1>
+      <main className="orders-page">
 
-      {orders.length === 0 ? (
-        <p>No orders found.</p>
-      ) : (
-        <div className="orders-container">
+        <h1>My Orders</h1>
 
-          {orders.map((order) => (
-            <div
-              key={order._id}
-              className="order-card"
-            >
+        {orders.length === 0 ? (
+          <p>No orders found.</p>
+        ) : (
+          <div className="orders-container">
 
-              {/* Order Header */}
-              <div className="order-header">
+            {orders.map((order) => (
+              <div
+                key={order._id}
+                className="order-card"
+              >
 
-                <h2>
-                  Order #{order._id}
-                </h2>
+                {/* Order Header */}
+                <div className="order-header">
 
-                <span className="order-status">
-                  {order.status}
-                </span>
+                  <h2>
+                    Order #{order._id}
+                  </h2>
 
-              </div>
+                  <span className="order-status">
+                    {order.status}
+                  </span>
 
-              {/* Customer Details */}
-              <div className="order-customer">
+                </div>
 
-                <p>
-                  <strong>Customer:</strong>{" "}
-                  {order.customer.name}
+                {/* Customer Details */}
+                <div className="order-customer">
+
+                  <p>
+                    <strong>Customer:</strong>{" "}
+                    {order.customer.name}
+                  </p>
+
+                  <p>
+                    <strong>Email:</strong>{" "}
+                    {order.customer.email}
+                  </p>
+
+                  <p>
+                    <strong>Phone:</strong>{" "}
+                    {order.customer.phone}
+                  </p>
+
+                  <p>
+                    <strong>Address:</strong>{" "}
+                    {order.customer.address},{" "}
+                    {order.customer.city} -{" "}
+                    {order.customer.pincode}
+                  </p>
+
+                </div>
+
+                {/* Products */}
+                <div className="order-products">
+
+                  <h3>Products</h3>
+
+                  {order.products.map((product) => (
+                    <div
+                      key={product._id}
+                      className="order-product"
+                    >
+
+                      <p>
+                        <strong>
+                          {product.name}
+                        </strong>
+                      </p>
+
+                      <p>
+                        ₹{product.price} ×{" "}
+                        {product.quantity}
+                      </p>
+
+                    </div>
+                  ))}
+
+                </div>
+
+                {/* Total */}
+                <div className="order-total">
+                  Total: ₹{order.totalAmount}
+                </div>
+
+                {/* Order Date */}
+                <p className="order-date">
+                  <strong>Order Date:</strong>{" "}
+                  {new Date(
+                    order.createdAt
+                  ).toLocaleString()}
                 </p>
 
-                <p>
-                  <strong>Email:</strong>{" "}
-                  {order.customer.email}
-                </p>
-
-                <p>
-                  <strong>Phone:</strong>{" "}
-                  {order.customer.phone}
-                </p>
-
-                <p>
-                  <strong>Address:</strong>{" "}
-                  {order.customer.address},{" "}
-                  {order.customer.city} -{" "}
-                  {order.customer.pincode}
-                </p>
-
               </div>
+            ))}
 
-              {/* Products */}
-              <div className="order-products">
+          </div>
+        )}
 
-                <h3>Products</h3>
-
-                {order.products.map((product) => (
-                  <div
-                    key={product._id}
-                    className="order-product"
-                  >
-
-                    <p>
-                      <strong>{product.name}</strong>
-                    </p>
-
-                    <p>
-                      ₹{product.price} ×{" "}
-                      {product.quantity}
-                    </p>
-
-                  </div>
-                ))}
-
-              </div>
-
-              {/* Total */}
-              <div className="order-total">
-                Total: ₹{order.totalAmount}
-              </div>
-
-              {/* Order Date */}
-              <p className="order-date">
-                <strong>Order Date:</strong>{" "}
-                {new Date(
-                  order.createdAt
-                ).toLocaleString()}
-              </p>
-
-            </div>
-          ))}
-
-        </div>
-      )}
-
-    </main>
+      </main>
+    </>
   );
 }

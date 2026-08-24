@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-export default function Navbar() {
+export default function Navbar(){
   const router = useRouter();
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -14,10 +14,7 @@ export default function Navbar() {
     setIsLoggedIn(!!localStorage.getItem("token"));
   }, []);
 
-  // Back button
-  const handleBack = () => {
-    router.back();
-  };
+
 
   // Logout
   const handleLogout = () => {
@@ -26,17 +23,17 @@ export default function Navbar() {
     window.location.href = "/login";
   };
 
-  return (
-    <nav className="navbar">
+ return (
+  <nav className="navbar">
 
-      {/* Back Button */}
-      <button
-        type="button"
-        onClick={handleBack}
-        className="back-btn"
-      >
-        ← Back
-      </button>
+    <button
+      onClick={() => router.back()}
+      className="nav-back-btn"
+    >
+      ← Back
+    </button>
+
+    {/* your existing navbar code */}
 
       {/* Logo */}
       <Link href="/products" className="logo">
